@@ -1,22 +1,22 @@
 #include "TileMap.h"
 
-TileMap::TileMap(QPointF size) : m_size(size) {
-    QPointF tileSize {100, 100};
-
+TileMap::TileMap(QPoint size, TileSet& tileset) :
+    m_size(size), m_tileset(tileset), m_tileSize(tileset.getTileSize())
+{
     for (float x = 0.f; x < size.x(); x++) {
         for (float y = 0.f; y < size.y(); y++) {
-            m_tiles.push_back(new Tile {QPointF{x * 100, y * 100}, tileSize});
-            enableTile({x, y});
+            m_tiles.push_back(new Tile {QPointF{x * m_tileSize.x(), y * m_tileSize.y()}, m_tileset});
+            //enableTile({x, y});
         }
     }
 
-    disableTile(QPointF{1, 1});
+    enableTile({1, 1});
+    //disableTile(QPointF{1, 1});
 }
 
 void TileMap::updatePosition()
 {
     return;
-    QPointF tileSize {100, 100};
     static int counter = 0;
     if (childItems().size() > 0) {
         qDebug() << childItems()[0];

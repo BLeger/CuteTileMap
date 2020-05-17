@@ -5,10 +5,12 @@
 #include <QPainter>
 #include <QPointF>
 
+#include "TileSet.h"
+
 class Tile : public QGraphicsItem
 {
 public:
-    Tile(QPointF position, QPointF tileSize);
+    Tile(QPointF position, TileSet& tileset);
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
@@ -20,6 +22,7 @@ public:
 private:
     QPointF m_position;
     QPointF m_tileSize;
+    TileSet& m_tileset;
 
     bool m_enabled = false;
 };

@@ -19,12 +19,14 @@ SOURCES += \
     Game.cpp \
     Tile.cpp \
     TileMap.cpp \
+    TileSet.cpp \
     main.cpp
 
 HEADERS += \
     Game.h \
     Tile.h \
-    TileMap.h
+    TileMap.h \
+    TileSet.h
 
 FORMS +=
 
@@ -32,3 +34,6 @@ FORMS +=
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    ressources.qrc

@@ -17,7 +17,7 @@ class Game : public QGraphicsView
     Q_OBJECT
 
 public:
-    Game(QWidget *parent = 0);
+    Game(TileSet& tileset, QWidget *parent = 0);
 
 public slots:
     void update();
