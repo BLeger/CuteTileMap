@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    TileSet tileset {":/tilemap.png", {16, 16}, {10, 10}};
+    TileSet tileset {":/tileset.json"};
     // add a view to visualize the scene
     Game * view = new Game(tileset);
 

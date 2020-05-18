@@ -1,0 +1,69 @@
+{
+    "name": "Test map",
+    "author": "<3",
+    "version": "1.0",
+    "map": [
+        {
+            "position": {"x": 0, "y": 0},
+            "tile": "air"
+        },
+        {
+            "position": {"x": 1, "y": 0},
+            "tile": "air"
+        },
+        {
+            "position": {"x": 2, "y": 0},
+            "tile": "air"
+        },
+        {
+            "position": {"x": 3, "y": 0},
+            "tile": "air"
+        },
+        {
+            "position": {"x": 4, "y": 0},
+            "tile": "air"
+        },
+
+        {
+            "position": {"x": 0, "y": 1},
+            "tile": "air"
+        },
+        {
+            "position": {"x": 1, "y": 1},
+            "tile": "grass_left"
+        },
+        {
+            "position": {"x": 2, "y": 1},
+            "tile": "grass_middle"
+        },
+        {
+            "position": {"x": 3, "y": 1},
+            "tile": "grass_right"
+        },
+        {
+            "position": {"x": 4, "y": 1},
+            "tile": "air"
+        },
+
+        {
+            "position": {"x": 0, "y": 2},
+            "tile": "air"
+        },
+        {
+            "position": {"x": 1, "y": 2},
+            "tile": "dirt_left"
+        },
+        {
+            "position": {"x": 2, "y": 2},
+            "tile": "dirt_middle"
+        },
+        {
+            "position": {"x": 3, "y": 2},
+            "tile": "dirt_right"
+        },
+        {
+            "position": {"x": 4, "y": 2},
+            "tile": "air"
+        }
+    ]
+}

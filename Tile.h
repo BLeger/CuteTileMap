@@ -17,12 +17,19 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
     void enable() { m_enabled = true; };
+    void enable(QString descriptorName) {
+        enable();
+        m_descriptorName = descriptorName;
+    }
     void disable() { m_enabled = false; }
-    bool isEnabled() { return m_enabled; }
+    bool isEnabled() { return m_enabled && m_descriptorName.length() > 0; }
+
 private:
     QPointF m_position;
     QPointF m_tileSize;
     TileSet& m_tileset;
+
+    QString m_descriptorName = "";
 
     bool m_enabled = false;
 };

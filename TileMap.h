@@ -16,6 +16,7 @@ public:
     void updatePosition();
 
     void enableTile(QPointF position);
+    void enableTile(QPointF position, QString descriptorName);
     void disableTile(QPointF position);
 
 private:

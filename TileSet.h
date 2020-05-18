@@ -1,24 +1,46 @@
 #ifndef TILESET_H
 #define TILESET_H
 
+#include <algorithm>
+
 #include <QString>
 #include <QPointF>
 #include <QImage>
+#include <QDebug>
+
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 class TileSet {
 
 public:
-    TileSet(QString imagePath, QPointF tileSize, QPoint size, QPointF tileOffset = {0, 0});
+
+    struct TileDescriptor {
+        QString name;
+        QPoint position;
+        bool collision;
+    };
+
+    TileSet(QString imagePath, QPoint tileSize, QPoint size, QPoint tileOffset = {0, 0});
+    TileSet(QString jsonDescriptorPath);
 
     QPointF getTileSize();
     const QImage& getImage();
-    QRectF getTileRect();
+    QRectF getTileRect(QString name);
+
+    const TileDescriptor& getTileDescriptor(QString name);
 
 private:
     QImage m_image;
-    QPointF m_tileSize;
+    QPoint m_tileSize;
     QPoint m_size;
-    QPointF m_tileOffset;
+    QPoint m_tileOffset;
+
+    QVector<TileDescriptor> m_tileDescriptors;
+
+    void addTileDescriptor(QJsonObject& descriptor);
 };
 
 #endif // TILESET_H
