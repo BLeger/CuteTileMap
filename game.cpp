@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(TileSet& tileset, QWidget *parent): QGraphicsView(parent), m_tilemap({20, 6}, tileset)
+Game::Game(TileSet& tileset, QWidget *parent): QGraphicsView(parent), m_tilemap(tileset, ":/map.json")
 {
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer.start(1000);

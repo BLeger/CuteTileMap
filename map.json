@@ -1,7 +1,6 @@
 {
     "name": "Test map",
-    "author": "<3",
-    "version": "1.0",
+    "size": {"x": 20, "y": 20},
     "map": [
         {
             "position": {"x": 0, "y": 0},

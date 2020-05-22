@@ -5,6 +5,11 @@
 #include <QGraphicsItemGroup>
 #include <QDebug>
 
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
 #include "TileSet.h"
 #include "Tile.h"
 
@@ -12,6 +17,7 @@ class TileMap : public QGraphicsItemGroup {
 
 public:
     TileMap(QPoint size, TileSet& tileset);
+    TileMap(TileSet& tileset, QString mapDescriptorPath);
 
     void updatePosition();
 

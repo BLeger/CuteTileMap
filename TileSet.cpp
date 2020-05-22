@@ -38,8 +38,6 @@ TileSet::TileSet(QString jsonDescriptorPath)
         QJsonObject tileDescriptor = tileDescriptorRef.toObject();
         addTileDescriptor(tileDescriptor);
     }
-
-    qDebug() << imagePath;
 }
 
 QPointF TileSet::getTileSize()
