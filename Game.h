@@ -10,7 +10,8 @@
 #include <QDebug>
 
 #include "Tile.h"
-#include "TileMap.h"
+#include "CenteredTileMap.h"
+#include "Player.h"
 
 class Game : public QGraphicsView
 {
@@ -26,8 +27,10 @@ private:
     QTimer m_timer;
     QGraphicsScene m_scene;
     QGraphicsItemGroup m_group;
-    TileMap m_tilemap;
+    CenteredTileMap m_tilemap;
     int counter = 0;
+
+    Player m_player;
 };
 
 #endif // GAME_H

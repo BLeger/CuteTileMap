@@ -116,3 +116,10 @@ void TileMap::disableTile(QPointF position)
         tile.disable();
     }
 }
+
+void TileMap::disableAll()
+{
+    for (auto *tile : m_tiles) {
+        tile->disable();
+    }
+}

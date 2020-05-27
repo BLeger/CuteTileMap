@@ -16,14 +16,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    CenteredTileMap.cpp \
     Game.cpp \
+    Player.cpp \
     Tile.cpp \
     TileMap.cpp \
     TileSet.cpp \
     main.cpp
 
 HEADERS += \
+    CenteredTileMap.h \
     Game.h \
+    Player.h \
     Tile.h \
     TileMap.h \
     TileSet.h
