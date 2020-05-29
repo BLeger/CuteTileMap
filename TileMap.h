@@ -19,8 +19,6 @@ public:
     TileMap(QPoint size, TileSet& tileset);
     TileMap(TileSet& tileset, QString mapDescriptorPath);
 
-    void updatePosition();
-
     void enableTile(QPointF position);
     void enableTile(QPointF position, QString descriptorName);
     void disableTile(QPointF position);

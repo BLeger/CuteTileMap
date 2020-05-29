@@ -8,24 +8,6 @@ TileMap::TileMap(QPoint size, TileSet& tileset) :
             m_tiles.push_back(new Tile {QPointF{x * m_tileSize.x(), y * m_tileSize.y()}, m_tileset});
         }
     }
-
-    for (int i = 0; i < 10; i++) {
-        enableTile({(float)i, 0}, "air");
-    }
-
-    enableTile({0, 1}, "air");
-    enableTile({1, 1}, "grass_left");
-    enableTile({2, 1}, "grass_middle");
-    enableTile({3, 1}, "grass_middle");
-    enableTile({4, 1}, "grass_right");
-    enableTile({5, 1}, "air");
-
-    enableTile({0, 2}, "air");
-    enableTile({1, 2}, "dirt_left");
-    enableTile({2, 2}, "dirt_middle");
-    enableTile({3, 2}, "dirt_middle");
-    enableTile({4, 2}, "dirt_right");
-    enableTile({5, 2}, "air");
 }
 
 TileMap::TileMap(TileSet &tileset, QString mapDescriptorPath) :
@@ -55,24 +37,20 @@ TileMap::TileMap(TileSet &tileset, QString mapDescriptorPath) :
 
     for (auto tileInfoRef : tiles) {
         QJsonObject tileInfo = tileInfoRef.toObject();
+
+        // Read the position of the tile
         QJsonObject positionObject = tileInfo["position"].toObject();
         QPoint position {positionObject["x"].toInt(), positionObject["y"].toInt()};
-        QString tileName = tileInfo["tile"].toString();
+
+        // Tilename
+        QString tileName = tileInfo["tile"].toString();    
+
         enableTile(position, tileName);
-    }
-}
 
-void TileMap::updatePosition()
-{
-    return;
-    static int counter = 0;
-    if (childItems().size() > 0) {
-        qDebug() << childItems()[0];
-        ((Tile*) childItems()[0])->disable();
-        removeFromGroup(childItems()[0]);
-        //qDebug() << childItems()[0];
-
-        counter++;
+        // Trigger
+        /*if (tileInfo.contains("trigger")) {
+            getTile(position).setTriggerName(tileInfo["trigger"].toString());
+        }*/
     }
 }
 
@@ -119,7 +97,9 @@ void TileMap::disableTile(QPointF position)
 
 void TileMap::disableAll()
 {
-    for (auto *tile : m_tiles) {
-        tile->disable();
+    for (float y = 0.f; y < m_size.y(); y++) {
+        for (float x = 0.f; x < m_size.x(); x++) {
+            disableTile({x, y});
+        }
     }
 }

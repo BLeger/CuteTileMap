@@ -13,6 +13,8 @@ public:
     Player(QPoint viewSize);
     void keyPressEvent(QKeyEvent *event);
     QPoint getWorldPosition() { return m_worldPosition; }
+
+    QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
     void update();

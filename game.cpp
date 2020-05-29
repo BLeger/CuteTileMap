@@ -17,5 +17,19 @@ Game::Game(TileSet& tileset, QWidget *parent): QGraphicsView(parent), m_tilemap(
 
 void Game::update() {
     m_player.update();
-    m_tilemap.update(m_player.getWorldPosition());
+
+    for(auto item : m_player.collidingItems()) {
+        if (item->parentItem() == &m_tilemap) {
+            Tile* tile = (Tile*) item;
+            if (tile->hasCollision()) {
+                tile->enable("air");
+                qDebug() << "test";
+            }
+            //qDebug() << tile;
+
+        }
+
+    }
+    m_tilemap.update();
+    m_tilemap.updatePlayerPosition(m_player.getWorldPosition());
 }

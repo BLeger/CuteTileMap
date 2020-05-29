@@ -24,12 +24,19 @@ public:
     void disable() { m_enabled = false; }
     bool isEnabled() { return m_enabled && m_descriptorName.length() > 0; }
 
+    bool hasCollision();
+
+    void setTriggerName(QString name) { m_triggerName = name; }
+    bool hasTrigger() { return m_triggerName.size() > 0; }
+    QString getTriggerName() { return m_triggerName; }
+
 private:
     QPointF m_position;
     QPointF m_tileSize;
     TileSet& m_tileset;
 
     QString m_descriptorName = "";
+    QString m_triggerName = "";
 
     bool m_enabled = false;
 };

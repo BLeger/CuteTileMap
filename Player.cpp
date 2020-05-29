@@ -9,6 +9,7 @@ Player::Player(QPoint viewSize) : QGraphicsRectItem(nullptr), m_viewSize(viewSiz
 void Player::keyPressEvent(QKeyEvent *event)
 {
     float newX = m_worldPosition.x();
+    float newY = m_worldPosition.y();
 
     if (event->key() == Qt::Key_Left){
         newX -= 5;
@@ -17,10 +18,23 @@ void Player::keyPressEvent(QKeyEvent *event)
         newX += 5;
     }
 
+    if (event->key() == Qt::Key_Down){
+        newY += 5;
+    }
+    else if (event->key() == Qt::Key_Up){
+        newY -= 5;
+    }
+
     if (newX < 0) newX = 0;
+    if (newY < 0) newY = 0;
 
     m_worldPosition.setX(newX);
-    qDebug() << m_worldPosition.x();
+    m_worldPosition.setY(newY);
+}
+
+QRectF Player::boundingRect() const
+{
+    return QRectF(0, 0, 10, 10);
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
@@ -36,5 +50,5 @@ void Player::update()
         newX = m_worldPosition.x();
     }
 
-    setPos(newX, pos().y());
+    setPos(newX, m_worldPosition.y());
 }

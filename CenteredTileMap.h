@@ -10,7 +10,7 @@ public:
     CenteredTileMap(TileSet& tileset, QString mapDescriptorPath, QPoint viewSize);
 
     void setViewSize(QPoint viewSize);
-    void update(QPoint playerPosition);
+    void updatePlayerPosition(QPoint playerPosition);
 
 private:
     QPoint m_viewSize;

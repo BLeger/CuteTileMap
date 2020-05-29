@@ -9,7 +9,7 @@ CenteredTileMap::CenteredTileMap(QPoint size, TileSet &tileset, QPoint viewSize)
 CenteredTileMap::CenteredTileMap(TileSet &tileset, QString mapDescriptorPath, QPoint viewSize)
     : TileMap(tileset, mapDescriptorPath), m_viewSize(viewSize)
 {
-    disableAll();
+    //0disableAll();
 }
 
 void CenteredTileMap::setViewSize(QPoint viewSize)
@@ -17,7 +17,7 @@ void CenteredTileMap::setViewSize(QPoint viewSize)
     m_viewSize = viewSize;
 }
 
-void CenteredTileMap::update(QPoint playerPosition)
+void CenteredTileMap::updatePlayerPosition(QPoint playerPosition)
 {
     // Convert player pixel position into tile position
     QPoint tilePlayerPosition {(int) (playerPosition.x() / getTileSize().x()), (int) (playerPosition.y() / getTileSize().y())};
@@ -32,20 +32,17 @@ void CenteredTileMap::update(QPoint playerPosition)
     int leftMostTileX = tilePlayerPosition.x() - numberOfTileDisplaySideX;
     leftMostTileX = std::max(0, leftMostTileX);
 
-    qDebug() << "left most : " << leftMostTileX;
-
     // The x position of the tile that will be on the right of the screen
-    int rightMostTileX = leftMostTileX + numberOfTileDisplayX;
+    /*int rightMostTileX = leftMostTileX + numberOfTileDisplayX;
     rightMostTileX = std::min(getSize().x() - 1, rightMostTileX + 1); // +1 to avoid having an empty tile on the right
-
-    qDebug() << "right most : " << rightMostTileX;
 
     disableAll();
     for (float x = leftMostTileX; x < rightMostTileX; x++) {
+        //qDebug() << x;
         for (float y = 0; y < getSize().y(); y++) {
             enableTile({x, y});
         }
-    }
+    }*/
 
     float offsetX = 0;
 

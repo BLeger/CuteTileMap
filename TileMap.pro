@@ -22,6 +22,7 @@ SOURCES += \
     Tile.cpp \
     TileMap.cpp \
     TileSet.cpp \
+    TriggerManager.cpp \
     main.cpp
 
 HEADERS += \
@@ -30,7 +31,8 @@ HEADERS += \
     Player.h \
     Tile.h \
     TileMap.h \
-    TileSet.h
+    TileSet.h \
+    TriggerManager.h
 
 FORMS +=
 

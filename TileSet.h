@@ -30,6 +30,8 @@ public:
     const QImage& getImage();
     QRectF getTileRect(QString name);
 
+    bool hasCollision(QString name);
+
     const TileDescriptor& getTileDescriptor(QString name);
 
 private:

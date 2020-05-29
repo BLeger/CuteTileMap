@@ -23,3 +23,8 @@ void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidge
 
     painter->drawImage(QRectF{0, 0, m_tileSize.x(), m_tileSize.y()}, m_tileset.getImage(), m_tileset.getTileRect(m_descriptorName));
 }
+
+bool Tile::hasCollision()
+{
+    return isEnabled() && m_tileset.hasCollision(m_descriptorName);
+}

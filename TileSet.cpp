@@ -60,6 +60,11 @@ QRectF TileSet::getTileRect(QString name)
                 (float) m_tileSize.x(), (float) m_tileSize.y()};
 }
 
+bool TileSet::hasCollision(QString name)
+{
+    return getTileDescriptor(name).collision;
+}
+
 const TileSet::TileDescriptor &TileSet::getTileDescriptor(QString name)
 {
     auto descriptor = std::find_if(m_tileDescriptors.begin(), m_tileDescriptors.end(), [&name](const TileDescriptor& value) {
