@@ -17,22 +17,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     CenteredTileMap.cpp \
+    CollisionHandler.cpp \
     Game.cpp \
     Player.cpp \
     Tile.cpp \
     TileMap.cpp \
     TileSet.cpp \
-    TriggerManager.cpp \
     main.cpp
 
 HEADERS += \
     CenteredTileMap.h \
+    CollisionHandler.h \
     Game.h \
     Player.h \
     Tile.h \
     TileMap.h \
-    TileSet.h \
-    TriggerManager.h
+    TileSet.h
 
 FORMS +=
 

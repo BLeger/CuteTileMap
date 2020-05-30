@@ -51,4 +51,5 @@ void CenteredTileMap::updatePlayerPosition(QPoint playerPosition)
     }
 
     setPos(offsetX, pos().y());
+    m_offsetX = offsetX;
 }

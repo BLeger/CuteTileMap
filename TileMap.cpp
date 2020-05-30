@@ -46,11 +46,6 @@ TileMap::TileMap(TileSet &tileset, QString mapDescriptorPath) :
         QString tileName = tileInfo["tile"].toString();    
 
         enableTile(position, tileName);
-
-        // Trigger
-        /*if (tileInfo.contains("trigger")) {
-            getTile(position).setTriggerName(tileInfo["trigger"].toString());
-        }*/
     }
 }
 

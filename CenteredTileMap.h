@@ -11,9 +11,11 @@ public:
 
     void setViewSize(QPoint viewSize);
     void updatePlayerPosition(QPoint playerPosition);
+    float getOffsetX() { return m_offsetX; }
 
 private:
     QPoint m_viewSize;
+    float m_offsetX;
 };
 
 #endif // CENTEREDTILEMAP_H

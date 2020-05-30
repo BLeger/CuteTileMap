@@ -12,6 +12,7 @@
 #include "Tile.h"
 #include "CenteredTileMap.h"
 #include "Player.h"
+#include "CollisionHandler.h"
 
 class Game : public QGraphicsView
 {

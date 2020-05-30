@@ -25,10 +25,9 @@ public:
     bool isEnabled() { return m_enabled && m_descriptorName.length() > 0; }
 
     bool hasCollision();
-
-    void setTriggerName(QString name) { m_triggerName = name; }
-    bool hasTrigger() { return m_triggerName.size() > 0; }
-    QString getTriggerName() { return m_triggerName; }
+    bool hasWin();
+    bool hasKill();
+    bool hasDisappear();
 
 private:
     QPointF m_position;
@@ -36,7 +35,6 @@ private:
     TileSet& m_tileset;
 
     QString m_descriptorName = "";
-    QString m_triggerName = "";
 
     bool m_enabled = false;
 };

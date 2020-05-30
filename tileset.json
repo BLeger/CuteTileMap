@@ -53,6 +53,36 @@
             "name": "air",
             "position": {"x": 16, "y": 0},
             "collision": false
+        },
+        {
+            "name": "question_box",
+            "position": {"x": 15, "y": 0},
+            "collision": true
+        }, 
+        {
+            "name": "weak_ground",
+            "position": {"x": 16, "y": 3},
+            "collision": true
+        },
+        {
+            "name": "double_tube_top_left",
+            "position": {"x": 12, "y": 33},
+            "collision": true
+        },
+        {
+            "name": "double_tube_top_right",
+            "position": {"x": 13, "y": 33},
+            "collision": true
+        },
+        {
+            "name": "double_tube_middle_left",
+            "position": {"x": 12, "y": 34},
+            "collision": true
+        },
+        {
+            "name": "double_tube_middle_right",
+            "position": {"x": 13, "y": 34},
+            "collision": true
         }
     ]
 }
