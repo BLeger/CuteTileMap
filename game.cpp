@@ -17,29 +17,28 @@ Game::Game(TileSet& tileset, QWidget *parent): QGraphicsView(parent), m_tilemap(
 }
 
 void Game::update() {
-    QGraphicsItem *itemUnder = itemAt({(int) m_player.pos().x(), (int) (m_player.pos().y() + m_player.boundingRect().height() + 2)});
-    if (itemUnder != nullptr && itemUnder->parentItem() == &m_tilemap) {
-        m_player.setHasGroundUnder(true);
-    } else {
-        m_player.setHasGroundUnder(false);
-    }
+    bool tileUnderPlayer = tileExistsAt({(int) m_player.pos().x(), (int) (m_player.pos().y() + m_player.boundingRect().height() + 2)});
+    bool tileRightPlayer = tileExistsAt({(int) (m_player.pos().x() + m_player.boundingRect().width()) + 2, (int) (m_player.pos().y() + m_player.boundingRect().height() - 2)});
+    bool tileLeftPlayer = tileExistsAt({(int) (m_player.pos().x() - 2), (int) (m_player.pos().y() + m_player.boundingRect().height() - 2)});
 
     m_player.focusItem();
-    m_player.update();
+    m_player.update(tileLeftPlayer, tileRightPlayer, tileUnderPlayer);
 
     for(auto item : m_player.collidingItems()) {
         if (item->parentItem() == &m_tilemap) {
             Tile* tile = (Tile*) item;
             if (tile->hasCollision()) {
                 CollisionHandler::playerTile(&m_player, tile, m_tilemap.getOffsetX());
-                //tile->enable("air");
             }
-            //qDebug() << tile;
-
         }
-
     }
 
     m_tilemap.update();
     m_tilemap.updatePlayerPosition(m_player.getWorldPosition());
+}
+
+bool Game::tileExistsAt(QPoint position)
+{
+    QGraphicsItem *item = itemAt(position);
+    return item != nullptr && item->parentItem() == &m_tilemap;
 }

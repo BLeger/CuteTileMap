@@ -27,11 +27,11 @@ public slots:
 private:
     QTimer m_timer;
     QGraphicsScene m_scene;
-    QGraphicsItemGroup m_group;
     CenteredTileMap m_tilemap;
-    int counter = 0;
 
     Player m_player;
+
+    bool tileExistsAt(QPoint position);
 };
 
 #endif // GAME_H

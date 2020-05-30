@@ -3,11 +3,7 @@
 void CollisionHandler::playerTile(Player *player, Tile *tile, int mapOffset)
 {
     RectPoints playerPoints = getPoints(player);
-
     RectPoints tilePoints = getPoints(tile, mapOffset);
-
-    //qDebug() << "Collision ======================";
-    //qDebug() << playerWorldBound;
 
     // For both axis get the side the player is comming from
     // And the value of "penetration"
@@ -29,7 +25,6 @@ void CollisionHandler::playerTile(Player *player, Tile *tile, int mapOffset)
         verticalValue = playerPoints.bottomRight.y() - tilePoints.topRight.y();
     } else {
         verticalSide = Directions::Bottom;
-
         verticalValue = tilePoints.bottomRight.y() - playerPoints.topRight.y();
     }
 
@@ -48,19 +43,6 @@ void CollisionHandler::playerTile(Player *player, Tile *tile, int mapOffset)
 
         player->correctCollision({(int) horizontalValue, 0});
     }
-
-    // Horizontal collisions
-
-    /*qDebug() << tilePoints.topRight.x() << " - " << tilePoints.center.x();
-    if (playerPoints.topRight.x() > tilePoints.topLeft.x() && playerPoints.topRight.x() <= tilePoints.center.x()) {
-        // Collision on the left of the tile => move player to the left
-        //player->correctCollision({-10, 0});
-        qDebug() << "Correct left";
-
-    } else if (playerPoints.topLeft.x() < tilePoints.topRight.x() && playerPoints.topLeft.x() >= tilePoints.center.x()) {
-        // Collision on the right of the tile
-    }*/
-
 }
 
 CollisionHandler::RectPoints CollisionHandler::getPoints(QGraphicsItem *item, int offset)

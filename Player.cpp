@@ -8,31 +8,27 @@ Player::Player(QPoint viewSize) : QGraphicsRectItem(nullptr), m_viewSize(viewSiz
 
 void Player::keyPressEvent(QKeyEvent *event)
 {
-    float velocityX = m_velocity.x();
-    float velocityY = m_velocity.y();
-
-    bool xAxisPressed = false;
-
     if (event->key() == Qt::Key_Left){
-        if (velocityX == 0) velocityX -= 0.5;
-        velocityX -= 1;
-        xAxisPressed = true;
+        m_leftPressed = true;
     } else if (event->key() == Qt::Key_Right){
-        if (velocityX == 0) velocityX += 0.5;
-        velocityX += 1;
-        xAxisPressed = true;
+        m_rightPressed = true;
     }
 
-    m_xAxisPressed = xAxisPressed;
-    if (velocityX > 3) velocityX = 3;
-    if (velocityX < -3) velocityX = -3;
+    if (event->key() == Qt::Key_Up){
+        m_upPressed = true;
+    }
+}
 
-    m_velocity.setX(velocityX);
+void Player::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Left){
+        m_leftPressed = false;
+    } else if (event->key() == Qt::Key_Right){
+        m_rightPressed = false;
+    }
 
-    if (event->key() == Qt::Key_Up && m_jumpAvailable){
-        m_velocity.setY(-10);
-        m_worldPosition.setY(m_worldPosition.y() - 2);
-        setJumpAvailable(false);
+    if (event->key() == Qt::Key_Up){
+        m_upPressed = false;
     }
 }
 
@@ -46,49 +42,62 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWid
     painter->fillRect(QRectF{0, 0, 20, 30}, Qt::red);
 }
 
-void Player::update()
+void Player::update(bool leftTile, bool rightTile, bool downTile)
 {
+    // Calculate velocity
     float velocityX = m_velocity.x();
 
-    if (!m_xAxisPressed) {
+    if (m_leftPressed && !leftTile){
+        if (velocityX == 0) velocityX -= 0.5;
+        velocityX -= 1;
+    } else if (m_rightPressed && !rightTile){
+        if (velocityX == 0) velocityX += 0.5;
+        velocityX += 1;
+    } else {
+        // If no movement on x axis, slow down
         if (velocityX > 0) {
-            if (velocityX > 0.1) velocityX -= 0.1;
+            if (velocityX > 0.5) velocityX -= 0.5;
             else velocityX = 0;
         } else if (velocityX < 0){
-            if (velocityX < -0.1) velocityX += 0.1;
+            if (velocityX < -0.5) velocityX += 0.5;
             else velocityX = 0;
         }
     }
 
-    m_xAxisPressed = false;
-    //qDebug() << m_velocity.y();
-    m_velocity.setX(velocityX);
-    if (!m_hasGroundUnder) {
+    // Jump
+    if (m_upPressed && m_jumpAvailable){
+        m_velocity.setY(-10);
+        m_worldPosition.setY(m_worldPosition.y() - 2);
+        m_upPressed = false;
+        setJumpAvailable(false);
+    }
+
+    // Gravity
+    if (!downTile) {
         m_velocity.setY(m_velocity.y() + 1);
     }
 
+    // Enforce maximum velocity
+    if (velocityX > 3) velocityX = 3;
+    if (velocityX < -3) velocityX = -3;
+
     if (m_velocity.y() > 3) m_velocity.setY(3);
 
-    /*if (m_velocity.y() == 0) {
-        setJumpAvailable(true);
-    } else {
-        setJumpAvailable(false);
-    }*/
+    m_velocity.setX(velocityX);
 
-    float newXPos = m_worldPosition.x();
-    m_worldPosition.setX(newXPos + m_velocity.x());
+    // Calculate world position
+    m_worldPosition.setX(m_worldPosition.x() + m_velocity.x());
+    m_worldPosition.setY(m_worldPosition.y() + m_velocity.y());
 
-    float newYPos = m_worldPosition.y();
-    m_worldPosition.setY(newYPos + m_velocity.y());
-
-    int newX = m_viewSize.x() / 2;
-    if (newX < 0) newX = 0;
-
+    // Calculate display position
+    int displayXPosition;
     if (m_worldPosition.x() < (m_viewSize.x() / 2)) {
-        newX = m_worldPosition.x();
+        displayXPosition = m_worldPosition.x();
+    } else {
+        displayXPosition = m_viewSize.x() / 2;
     }
 
-    setPos(newX, newYPos);
+    setPos(displayXPosition, m_worldPosition.y());
 }
 
 void Player::correctCollision(QPoint correction)
@@ -99,10 +108,7 @@ void Player::correctCollision(QPoint correction)
     }
 
     if (correction.y() != 0) {
-        qDebug() << "Correct y !";
         m_velocity.setY(0);
         m_worldPosition.setY(m_worldPosition.y() + correction.y());
     }
-
-    update();
 }
