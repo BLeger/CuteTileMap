@@ -1,9 +1,22 @@
 #include "Game.h"
 
-Game::Game(TileSet& tileset, QWidget *parent): QGraphicsView(parent), m_tilemap(tileset, ":/map.json", {800, 20}), m_player({800, 20})
+Game::Game(TileSet& tileset, QWidget *parent): QGraphicsView(parent), m_tilemap(&tileset, {800, 20}), m_player({800, 20})
 {
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer.start(16);
+
+    // Read map json
+    QFile file;
+    file.setFileName(":/map.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QString val = file.readAll();
+    QJsonDocument document = QJsonDocument::fromJson(val.toUtf8());
+    QJsonObject mainObject = document.object();
+
+    m_tilemap.loadMap(mainObject);
+
+
 
     m_scene.addItem(&m_player);
     m_scene.setSceneRect(0, 0, 800, 600);
@@ -25,8 +38,7 @@ void Game::update() {
     m_player.update(tileLeftPlayer, tileRightPlayer, tileUnderPlayer);
 
     for(auto item : m_player.collidingItems()) {
-        if (item->parentItem() == &m_tilemap) {
-            Tile* tile = (Tile*) item;
+        if (Tile* tile = qgraphicsitem_cast<Tile*>(item)) {
             if (tile->hasCollision()) {
                 CollisionHandler::playerTile(&m_player, tile, m_tilemap.getOffsetX());
             }
@@ -40,5 +52,5 @@ void Game::update() {
 bool Game::tileExistsAt(QPoint position)
 {
     QGraphicsItem *item = itemAt(position);
-    return item != nullptr && item->parentItem() == &m_tilemap;
+    return item != nullptr && qgraphicsitem_cast<Tile*>(item) != nullptr;
 }

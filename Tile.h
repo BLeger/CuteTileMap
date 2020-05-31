@@ -29,6 +29,9 @@ public:
     bool hasKill();
     bool hasDisappear();
 
+    enum { Type = UserType + 1 };
+    int type() const override { return Type; }
+
 private:
     QPointF m_position;
     QPointF m_tileSize;

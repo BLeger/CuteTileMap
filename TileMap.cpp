@@ -1,39 +1,39 @@
 #include "TileMap.h"
 
-TileMap::TileMap(QPoint size, TileSet& tileset) :
-    m_size(size), m_tileSize(tileset.getTileSize()), m_tileset(tileset)
-{
-    for (float y = 0.f; y < size.y(); y++) {
-        for (float x = 0.f; x < size.x(); x++) {
-            m_tiles.push_back(new Tile {QPointF{x * m_tileSize.x(), y * m_tileSize.y()}, m_tileset});
-        }
-    }
-}
+TileMap::TileMap(TileSet* tileset) :
+    m_size({0, 0}), m_tileSize(tileset->getTileSize()), m_tileset(tileset)
+{}
 
-TileMap::TileMap(TileSet &tileset, QString mapDescriptorPath) :
-    m_tileSize(tileset.getTileSize()), m_tileset(tileset)
+TileMap::TileMap(TileSet *tileset, QJsonObject map) :
+    m_tileSize(tileset->getTileSize()), m_tileset(tileset)
 {
     // Read json file
-    QFile file;
+    /*QFile file;
     file.setFileName(mapDescriptorPath);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
 
     QString val = file.readAll();
     QJsonDocument document = QJsonDocument::fromJson(val.toUtf8());
-    QJsonObject mainObject = document.object();
+    QJsonObject mainObject = document.object();*/
 
+    loadMap(map);
+}
+
+void TileMap::loadMap(QJsonObject map)
+{
     // Read map size
-    QJsonObject size = mainObject["size"].toObject();
+    QJsonObject size = map["size"].toObject();
     m_size = {size["x"].toInt(), size["y"].toInt()};
 
+    // Create tiles
     for (float y = 0.f; y < m_size.y(); y++) {
         for (float x = 0.f; x < m_size.x(); x++) {
-            m_tiles.push_back(new Tile {QPointF{x * m_tileSize.x(), y * m_tileSize.y()}, m_tileset});
+            m_tiles.push_back(new Tile {QPointF{x * m_tileSize.x(), y * m_tileSize.y()}, *m_tileset});
         }
     }
 
     // Read tiles
-    QJsonArray tiles = mainObject["map"].toArray();
+    QJsonArray tiles = map["map"].toArray();
 
     for (auto tileInfoRef : tiles) {
         QJsonObject tileInfo = tileInfoRef.toObject();
@@ -43,7 +43,7 @@ TileMap::TileMap(TileSet &tileset, QString mapDescriptorPath) :
         QPoint position {positionObject["x"].toInt(), positionObject["y"].toInt()};
 
         // Tilename
-        QString tileName = tileInfo["tile"].toString();    
+        QString tileName = tileInfo["tile"].toString();
 
         enableTile(position, tileName);
     }

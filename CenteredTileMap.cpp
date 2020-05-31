@@ -1,15 +1,15 @@
 #include "CenteredTileMap.h"
 
-CenteredTileMap::CenteredTileMap(QPoint size, TileSet &tileset, QPoint viewSize)
-    : TileMap(size, tileset), m_viewSize(viewSize)
+CenteredTileMap::CenteredTileMap(TileSet *tileset, QPoint viewSize)
+    : TileMap(tileset), m_viewSize(viewSize)
 {
 
 }
 
-CenteredTileMap::CenteredTileMap(TileSet &tileset, QString mapDescriptorPath, QPoint viewSize)
-    : TileMap(tileset, mapDescriptorPath), m_viewSize(viewSize)
+CenteredTileMap::CenteredTileMap(TileSet *tileset, QJsonObject map, QPoint viewSize)
+    : TileMap(tileset, map), m_viewSize(viewSize)
 {
-    //0disableAll();
+    //disableAll();
 }
 
 void CenteredTileMap::setViewSize(QPoint viewSize)

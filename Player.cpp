@@ -56,10 +56,10 @@ void Player::update(bool leftTile, bool rightTile, bool downTile)
     } else {
         // If no movement on x axis, slow down
         if (velocityX > 0) {
-            if (velocityX > 0.5) velocityX -= 0.5;
+            if (velocityX > 0.1) velocityX -= 0.1;
             else velocityX = 0;
         } else if (velocityX < 0){
-            if (velocityX < -0.5) velocityX += 0.5;
+            if (velocityX < -0.1) velocityX += 0.1;
             else velocityX = 0;
         }
     }
